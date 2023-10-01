@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Auction Status{% endblock %}
+
+{% block content %}
+    <h2>Auction Status</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Start Price</th>
+                <th>Highest Bid</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in auction_data %}
+                <tr>
+                    <td>{{ data.auction.item_name }}</td>
+                    <td>{{ data.auction.start_time }}</td>
+                    <td>{{ data.auction.end_time }}</td>
+                    <td>${{ data.auction.start_price }}</td>
+                    <td>
+                        {% if data.highest_bid %}
+                            ${{ data.highest_bid.amount }}
+                        {% else %}
+                            No bids yet
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if data.auction.winner %}
+                            {{ data.auction.winner.username }}
+                        {% else %}
+                            Not determined yet
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
