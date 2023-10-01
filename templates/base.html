@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>{% block title %}My Auction App{% endblock %}</title>
 
 </head>
@@ -12,6 +13,13 @@
             <ul>
                 <li><a href="{% url 'home' %}">User: Auctions</a></li>
                 <li><a href="{% url 'admin_auctions' %}">Admin - Auctions</a></li>
+                
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'login' %}">User: Login</a></li>
+                <li><a href="{% url 'register' %}">User: Register</a></li>
+                {% else %}
+                    <li><a href="{% url 'logout' %}">User: Logout</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -24,7 +32,7 @@
     </main>
 
     <footer>
-        <p>&copy; {{ year }} My Auction App</p>
+        <p class="text-center d-flex flex-column vh-100 mt-auto">&copy; {{ year }} My Auction App</p>
     </footer>
 </body>
 </html>

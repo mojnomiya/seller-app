@@ -4,27 +4,41 @@
 {% block content %}
     <h1>Active Auctions</h1>
     <ul>
-        {% for auction in active_auctions %}
-            <li>
-                <h2>{{ auction.item_name }}</h2>
-                <p>Start Time: {{ auction.start_time }}</p>
-                <p>End Time: {{ auction.end_time }}</p>
-                <p>Start Price: ${{ auction.start_price }}</p>
-                <p>
-                    {% if auction.highest_bid %}
-                        Highest Bid: ${{ auction.highest_bid.amount }}
-                    {% else %}
-                        No bids yet
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Start Price</th>
+                    <th>Highest Bid</th>
+                    {% if user.is_authenticated %}
+                    <th>Action</th>
                     {% endif %}
-                </p>
-                <p>
-                    {% if auction.winner %}
-                        Winner: {{ auction.winner.username }}
-                    {% else %}
-                    Winner: Not determined yet
-                    {% endif %}
-                </p>
-            </li>
-        {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for auction in active_auctions %}
+                    <tr>
+                        <td>{{ auction.item_name }}</td>
+                        <td>{{ auction.start_time }}</td>
+                        <td>{{ auction.end_time }}</td>
+                        <td>${{ auction.start_price }}</td>
+                        <td>
+                            {% if highest_bid %}
+                                ${{ highest_bid.amount }}
+                            {% else %}
+                                No bids yet
+                            {% endif %}
+                        </td>
+                        {% if user.is_authenticated %}
+                        <td>
+                            Place bid
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </ul>
 {% endblock %}

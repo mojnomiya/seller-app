@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Auction, Bid
 from django.utils import timezone
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
 
 def home(request):
     active_auctions = Auction.objects.filter(end_time__gt=timezone.now())
@@ -18,3 +20,39 @@ def admin_auction_status(request):
         })
     
     return render(request, 'auction/admin_auctions.html', {'auction_data': auction_data})
+
+def user_register(request):
+    message = ""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        else:
+            message = "Invalid credentials"
+    else:
+        form = UserCreationForm()
+    context = {
+        'form': form,
+        'message': message
+    }
+    return render(request, 'auction/register.html', context)
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username'] 
+        password = request.POST['password'] 
+        user = authenticate(username=username, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return redirect('login')
+    else:
+        return render(request, 'auction/login.html')
+
+def logout_view(request):
+    logout(request) 
+    return redirect('home')       

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div style="width: 50%; margin: auto;" class="justify-content-center">
+    <div class="text-center"><h1>Login</h1></div>
+    <form class="form-control" action="" method="POST">
+        {% csrf_token %}
+        <label class="mb-2" for="username">Username</label>
+        <input class="form-control mb-2" type="text" name="username" placeholder="Enter Username">
+        <label class="mb-2" for="password">Password</label>
+        <input class="form-control mb-2" type="password" name="password" placeholder="Password">
+        <input type="submit" value="Login" class="btn btn-outline-success">
+    </form>
+</div>
+{% endblock %}
