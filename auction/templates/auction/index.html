@@ -33,7 +33,7 @@
                         </td>
                         {% if user.is_authenticated %}
                         <td>
-                            Place bid
+                            <a href="{% url 'place_bid' auction.id %}" class="btn btn-outline-success btn-sm">Bid</a>
                         </td>
                         {% endif %}
                     </tr>

@@ -2,13 +2,30 @@
 {% block title %}Place Bid{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center">
-    <h1>Bid</h1>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Enter Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" value="Login">
-    </form>
+<div class="border mb-3">
+    <h1>Bidding On</h1>
+    {% if message %}
+    <div class="alert alert-primary">{{message}}</div>
+    {% endif %}
+    <ul>
+
+        <li class="list-group">
+            <h2>{{ item.item_name }}</h2>
+            <p>Start Time: {{ item.start_time }}</p>
+            <p>End Time: {{ item.end_time }}</p>
+            <p>Start Price: ${{ item.start_price }}</p>
+        </li>
+
+    </ul>
+</div>
+<div class="">
+    <h4 class="mb-3">Bid</h4>
+    <div>
+        <form class="form-control" action="" method="POST">
+            {% csrf_token %}
+            <input class="form-control mb-2" type="number" name="bid_amount" placeholder="Enter Your Bid in $(USD)">
+            <input class="btn btn-outline-success" type="submit" value="Place Bid">
+        </form>
+    </div>
 </div>
 {% endblock %}
