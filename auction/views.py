@@ -1,11 +1,11 @@
 from django.shortcuts import redirect, render
-
-import auction
 from .models import Auction, Bid
 from django.utils import timezone
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 def home(request):
     active_auctions = Auction.objects.filter(end_time__gt=timezone.now())
@@ -35,6 +35,19 @@ def place_bid(request, item_id):
         message = 'Bid placed successfully'
         return render(request, 'auction/placebid.html', {'item': item, 'message': message})
     return render(request, 'auction/placebid.html', {'item': item})
+
+def end_auction(request, auction_id):
+    auction = get_object_or_404(Auction, pk=auction_id)
+    
+    current_time = timezone.now()
+    
+    if current_time >= auction.end_time:
+        winner = auction.determine_winner()
+        messages.success(request, f'Auction {auction.id} has ended successfully.')
+        return redirect('admin_auctions')
+    else:
+        messages.success(request, f'Check auction details')
+        return redirect('admin_auctions')
 
 def user_register(request):
     message = ""

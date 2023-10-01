@@ -12,6 +12,7 @@
                 <th>Start Price</th>
                 <th>Highest Bid</th>
                 <th>Winner</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,13 @@
                             Not determined yet
                         {% endif %}
                     </td>
+                    {% if data.auction.is_active %}
+                    <td>
+                        <a href="{% url 'end_auction' data.auction.id %}" class="btn btn-outline-danger btn-sm">Close Auction</a>
+                    </td>
+                    {% else %}
+                        <td>Closed</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

@@ -11,7 +11,6 @@
                     <th>Start Time</th>
                     <th>End Time</th>
                     <th>Start Price</th>
-                    <th>Highest Bid</th>
                     {% if user.is_authenticated %}
                     <th>Action</th>
                     {% endif %}
@@ -24,13 +23,6 @@
                         <td>{{ auction.start_time }}</td>
                         <td>{{ auction.end_time }}</td>
                         <td>${{ auction.start_price }}</td>
-                        <td>
-                            {% if highest_bid %}
-                                ${{ highest_bid.amount }}
-                            {% else %}
-                                No bids yet
-                            {% endif %}
-                        </td>
                         {% if user.is_authenticated %}
                         <td>
                             <a href="{% url 'place_bid' auction.id %}" class="btn btn-outline-success btn-sm">Bid</a>
