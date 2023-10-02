@@ -9,18 +9,20 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">User: Auctions</a></li>
-                <li><a href="{% url 'admin_auctions' %}">Admin - Auctions</a></li>
-                
-                {% if not request.user.is_authenticated %}
-                <li><a href="{% url 'login' %}">User: Login</a></li>
-                <li><a href="{% url 'register' %}">User: Register</a></li>
-                {% else %}
-                    <li><a href="{% url 'logout' %}">User: Logout</a></li>
-                {% endif %}
-            </ul>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">User: Auctions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'admin_auctions' %}">Admin - Auctions</a></li>
+                    
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">User: Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">User: Register</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">User: Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -30,9 +32,5 @@
             {% endblock %}
         </div>
     </main>
-
-    <footer>
-        <p class="text-center d-flex flex-column vh-100 mt-auto">&copy; {{ year }} My Auction App</p>
-    </footer>
 </body>
 </html>
